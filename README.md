@@ -5,7 +5,7 @@
 * Veiller à ce que les paquets __Docker__ et __Docker Compose__ soient bien installés sur le système.
 * Cloner le projet, et se placer à la racine de ce dernier (au même niveau que le fichier __docker-compose.yml__)
 
-Nous allons dans un premier temps construire les images Docker (dont la configuration est détaillée dans les Dockfiles présetns dans le dossier __context__)
+Nous allons dans un premier temps construire les images Docker (dont la configuration est détaillée dans les Dockfiles présents dans le dossier __context__)
 
     docker-compose build
     
