@@ -1,0 +1,63 @@
+version: '3.2'
+
+services:
+  database:
+    image: postgres:10
+    container_name: atelier_remote_debug_db
+    volumes:
+    - type: bind
+      source: "./volumes/db_pg"
+      target: "/var/lib/postgresql/data"
+    networks:
+      webapp_net:
+    ports:
+    - "15432:5432"
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+
+  php:
+    container_name: atelier_remote_debug_php
+    build:
+      context: ./context/php7-fpm
+      args:
+        XDBG_IDEKEY: ${XDBG_IDEKEY}
+        XDBG_REMOTE_PORT: ${XDBG_REMOTE_PORT}
+        TIMEZONE: ${TIMEZONE}
+        HOST_WWW_UID: ${HOST_WWW_UID}
+        HOST_WWW_GID: ${HOST_WWW_GID}
+    volumes:
+    - type: bind
+      source: "${HOST_WEBAPP_PATH}"
+      target: "/var/www/code"
+    networks:
+      webapp_net:
+
+  nginx:
+    container_name: atelier_remote_debug_nginx
+    build:
+      context: ./context/nginx
+      args:
+        WEBAPP_DOMAIN: ${WEBAPP_DOMAIN}
+    ports:
+    - 80:80
+    links:
+    - php
+    volumes:
+    - type: bind
+      source: "./volumes/logs/nginx/"
+      target: "/var/log/nginx"
+    - type: bind
+      source: "${HOST_WEBAPP_PATH}"
+      target: "/var/www/code"
+    networks:
+      webapp_net:
+        ipv4_address: ${NET_WEBAPP_IP}
+
+networks:
+  webapp_net:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: ${NET_SUBNET}

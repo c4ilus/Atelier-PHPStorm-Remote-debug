@@ -1,0 +1,2 @@
+2018/10/23 11:49:07 [error] 8#0: *11 upstream timed out (110: Connection timed out) while reading response header from upstream, client: 10.13.0.1, server: atelier.local, request: "GET / HTTP/1.1", upstream: "fastcgi://10.13.0.3:9000", host: "atelier.local"
+2018/10/23 11:50:08 [error] 8#0: *11 upstream timed out (110: Connection timed out) while reading response header from upstream, client: 10.13.0.1, server: atelier.local, request: "GET /favicon.ico HTTP/1.1", upstream: "fastcgi://10.13.0.3:9000", host: "atelier.local"
