@@ -35,7 +35,7 @@ de l'extension, se référer au fichier __context > php7-fpm > Dockerfile__. La 
 
 Nous allons également devoir créer un server.
 
-_Note : Avant d'effectuer cette opération, nous devons associer (dans notre fichier /etc/hosts) l'adresse IP choisie dans le fichier __.env__, avec un domaine.
+_Note : Avant d'effectuer cette opération, nous devons associer (dans notre fichier /etc/hosts) l'adresse IP choisie dans le fichier __.env__, avec un domaine._
 
     echo "10.13.0.100 atelier.local" >> /etc/hosts
     
