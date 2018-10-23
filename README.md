@@ -1,6 +1,6 @@
 # Préparation du projet (avec des vrais morceaux de docker dedans)
 
-## Prérecquis
+## Prérequis
 
 * Veiller à ce que les paquets __Docker__ et __Docker Compose__ soient bien installés sur le système.
 * Cloner le projet, et se placer à la racine de ce dernier (au même niveau que le fichier __docker-compose.yml__)
