@@ -1,11 +1,11 @@
-# Préparation du projet (avec des vrais morceaux de docker dedans)
+# Préparation du projet (avec des vrais morceaux de Docker dedans)
 
 ## Prérequis
 
 * Veiller à ce que les paquets __Docker__ et __Docker Compose__ soient bien installés sur le système.
 * Cloner le projet, et se placer à la racine de ce dernier (au même niveau que le fichier __docker-compose.yml__)
 
-Nous allons dans un premier temps construire les images docker (dont la configuration est détaillée dans les Dockfiles présetns dans le dossier __context__)
+Nous allons dans un premier temps construire les images Docker (dont la configuration est détaillée dans les Dockfiles présetns dans le dossier __context__)
 
     docker-compose build
     
@@ -78,3 +78,68 @@ Si nous regardons PHPStorm, nous voyons en bas de l'IDE un groupe d'onglet s'ouv
 * Cliquer sur l'onglet __Debugger__. Nous avons maintenant accès au contenu des différentes variables (sous forme de liste dépliante), utilisées dans le fichier index.php, présentes jusqu'avant le point d'arrêt.
 
 SUCCESS !!!
+
+Nous allons maintenant configurer PHPSTorm, afin qu'il utilise PHP Code sniffer en tant que linter (inspecteur en temps réel)
+
+## PHPCS
+
+Les standards d'ecriture de code pour le monde PHP sont définis par la [PSR-2](https://www.php-fig.org/psr/psr-2/).
+
+De même que Xdebug est configuré pour ce projet, nous allons faire une configuration spécifique pour phpcs.
+
+### L'interpreteur en ligne de commandes.
+
+Avant toute chose, nous allons devoir configurer un "CLI interpreter", afin d'acceder a la ligne de commande __"php"__ du container _atelier_remote_debug_php__.
+
+* Cliquer sur __File__ > _Settings...__
+* Dans la nouvelle fenêtre, déplier la section __Languages & Frameworks__, et cliquer sur __PHP__
+* Dans la partie de droite, cliquer sur les __...__ en face de __CLI Interpreter__
+* Cliquer sur __+__, puis sur __From Docker, ...___
+
+Nous serions tentés ici d'utiliser __Docker Compose__, QUE NENNI !! Nous travaillons ici avec le version 3.2 de la
+syntaxe de Docker Compose. Cette version entraine cependant un bug empêchant l'utilisation de cette option. Nous allons
+nous contenter de l'utilisation plus "simple" de Docker.
+
+* Cocher l'option __Docker__
+
+En face de Server, nous voyons __Docker__ déja selectionné. A ce stade, l'IDE est déja connexté au daemon Docker via
+un socket Unix. Nous n'avons qu'a choisir l'image à utiliser.
+
+* En face de __Image name__, cliquer sur la flèche, et choisir dans la liste l'image qui nous interesse (crée avec le nom atelierphpstormremotedebug_php:latest
+dans notre cas).
+* Dans le champ __PHP interpreter path__, saisir __php__, et cliquer sur __OK__
+
+Dans l'écran qui suit, si tout s'est déroulé comme prévu, nous devrions voir l'information __PHP version: 7.2.<qqch> (selon version de l'image php d'origine),
+et __Debugger: Xdebug 2.6.1__
+
+* Cliquer sur __APPLY__ et __OK__
+
+### Code sniffer
+
+Nous revenons ici à l'écran __Settings__
+
+* Toujours dans la section __Languages & Framework__, déplier __PHP__, et cliquer sur __Code sniffer__.
+* En face du champ __Configuration__, cliquer sur __...__.
+* Cliquer sur __+__.
+* Dans la fenêtre qui s'ouvre, choisir le nouvel interpreter que nous venons de créer, et cliquer sur __OK__.
+* Dans le champ __PHP Code Sniffer path__, saisir __phpcs__, et cliquer sur __Valider__. En cas de succès,
+une pop-up verte devrais s'ouvrir affichant la version de PHP Code sniffer présente dans le container.
+* Cliquer sur __APPLY__ puis __OK__
+
+### L'inspecteur
+
+Dernière chose à faire ... ça commence à être long là non ? Mais non, mais non !
+
+Nous revenons (pour la dernière fois) à l'écran __Settings__
+
+* Déplier la section __Editor__ et cliquer sur __Inspection__
+* Dans la partie de droite, déplier __PHP__ > __Quality tools__
+* Cocher __PHP Code snifer validation__
+* Cliquer sur __APPLY__, puis en face du champ __Coding standard__, cliquer sur le bouton de recherche bleu (afin de charger la liste des standards utilisables par phpcs)
+* Dans la liste qui apparaît enfin, selectionner __PSR2__
+* Cliquer sur __APPLY__ puis __OK__
+
+Vous voilà prêts !!
+
+Désormais dans PHPStorm, chaque ligne présentant une erreur de respect à un standard sera soulignée en jaune. Le message
+d'avertissement associé apparaîtra dans une bulle au survol de la dite ligne, ou en bas de l'editeur, en cliquand sur cette même ligne.
