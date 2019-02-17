@@ -118,7 +118,7 @@ et __Debugger: Xdebug 2.6.1__
 
 Nous revenons ici à l'écran __Settings__
 
-* Toujours dans la section __Languages & Framework__, déplier __PHP__, et cliquer sur __Code sniffer__.
+* Toujours dans la section __Languages & Framework__, déplier __PHP__, __Quality tools__, et sur l'écran de droite, cliquer sur __Code sniffer__.
 * En face du champ __Configuration__, cliquer sur __...__.
 * Cliquer sur __+__.
 * Dans la fenêtre qui s'ouvre, choisir le nouvel interpreter que nous venons de créer, et cliquer sur __OK__.
