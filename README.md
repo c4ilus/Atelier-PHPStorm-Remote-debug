@@ -83,7 +83,7 @@ Nous allons maintenant configurer PHPSTorm, afin qu'il utilise PHP Code sniffer 
 
 ## PHPCS
 
-Les standards d'ecriture de code pour le monde PHP sont définis par la [PSR-2](https://www.php-fig.org/psr/psr-2/).
+Les standards d'ecriture de code pour le monde PHP sont définis par la [PSR-12](https://www.php-fig.org/psr/psr-12/).
 
 De même que Xdebug est configuré pour ce projet, nous allons faire une configuration spécifique pour phpcs.
 
